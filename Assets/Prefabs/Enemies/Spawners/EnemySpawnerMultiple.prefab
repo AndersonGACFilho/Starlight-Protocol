@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7125813286935845032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7125813286935845034}
+  - component: {fileID: 7125813286935845035}
+  m_Layer: 0
+  m_Name: EnemySpawnerMultiple
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7125813286935845034
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125813286935845032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2.1023676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -5.78, y: 6.26}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7125813286935845035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125813286935845032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830b9e1d08327e44eaeaccf7737c98b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawnDefinitions:
+  - enemyPrefab: {fileID: 111767558614867185, guid: cfd62ad4c55daa942bae8f75211b08e0, type: 3}
+    enemyParent: {fileID: 0}
+    minimumWave: 0
+    spawnWeight: 1
+  - enemyPrefab: {fileID: 8282131552441171987, guid: 576cba70e4daccf488dda522850ba325, type: 3}
+    enemyParent: {fileID: 0}
+    minimumWave: 1
+    spawnWeight: 1
+  - enemyPrefab: {fileID: 8282131552441171987, guid: 69bb62ab0a22b454ab3c1a7e6c5a110a, type: 3}
+    enemyParent: {fileID: 0}
+    minimumWave: 2
+    spawnWeight: 1
+  - enemyPrefab: {fileID: 8282131552441171987, guid: 91411278b0dfa9a468f417268eba15a3, type: 3}
+    enemyParent: {fileID: 0}
+    minimumWave: 1
+    spawnWeight: 1
+  - enemyPrefab: {fileID: 8282131552441171987, guid: fd821cc36f666d54592388e02f75fcb5, type: 3}
+    enemyParent: {fileID: 0}
+    minimumWave: 1
+    spawnWeight: 1
+  target: {fileID: 0}
+  projectileHolder: {fileID: 0}
+  playerTag: Player
+  spawnPoints: []
+  minDistanceFromTarget: 6
+  maxSpawnPointAttempts: 20
+  fallbackToAnySpawnPoint: 1
+  spawnRangeX: 35
+  spawnRangeY: 35
+  drawDebugGizmos: 0
+  spawnPointDebugRadius: 0.1
+  spawnInfinite: 0
+  maxSpawn: 20
