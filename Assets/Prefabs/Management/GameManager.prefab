@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4867940027157724174}
   - component: {fileID: 4867940027157724161}
+  - component: {fileID: 8384051841688937233}
+  - component: {fileID: 7462663662625547465}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -48,10 +50,40 @@ MonoBehaviour:
   gameManagerScore: 0
   highScore: 0
   gameIsWinnable: 0
-  enemiesToDefeat: 3
+  enemiesToDefeat: 0
   printDebugOfWinnableStatus: 0
   gameVictoryPageIndex: 2
   victoryEffect: {fileID: 6671380785883311296, guid: 1dbb1fe3f1006ce4b89f203ed833e04e, type: 3}
   gameOverPageIndex: 1
   gameOverEffect: {fileID: 3623134921759700094, guid: bfc99d98d6418b04590bafbb9ddc8cd5, type: 3}
   gameIsOver: 0
+--- !u!114 &8384051841688937233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867940027157724160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4035654639904343bd9b35a2e920a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorChanger
+  newCursorSprite: {fileID: 2800000, guid: 37394102527191243b26bf5a6930b795, type: 3}
+--- !u!114 &7462663662625547465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867940027157724160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559f0748d72164e4d810c4929ddf7f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenshotUtility
+  runOnlyInEditor: 1
+  m_ScreenshotKey: c
+  m_ScaleFactor: 1
+  includeImageSizeInFilename: 1
+  m_ImageCount: 0

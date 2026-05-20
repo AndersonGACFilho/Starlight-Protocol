@@ -52,4 +52,5 @@ MonoBehaviour:
   spawnDelayReductionPerWave: 0.15
   minSpawnDelay: 0.6
   timeBetweenWaves: 5
+  powerUpsPerCompletedWave: 2
   maxAliveEnemies: 10

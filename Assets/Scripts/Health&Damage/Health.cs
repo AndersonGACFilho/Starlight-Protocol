@@ -244,14 +244,16 @@ public class Health : MonoBehaviour
         }
         else
         {
-            if (gameObject.name == "Player" && gameObject.tag != "Player")
+            if (gameObject.name == "Player" && !IsPlayerHealth())
             {
-                Debug.LogWarning("It looks like you're trying to kill a player, but your player hasn't been tagged as 'Player' in the inspector! \n Please tag your player.");
+                Debug.LogWarning("It looks like you're trying to kill a player, but it is not tagged as 'Player' and is not assigned as GameManager.player.");
             }
-            if (gameObject.tag == "Player" && GameManager.instance != null)
+
+            if (IsPlayerHealth())
             {
                 GameManager.instance.GameOver();
             }
+
             if (gameObject.GetComponent<Enemy>() != null)
             {
                 gameObject.GetComponent<Enemy>().DoBeforeDestroy();
@@ -270,14 +272,30 @@ public class Health : MonoBehaviour
     /// </summary>
     void HandleDeathWithoutLives()
     {
-        if (gameObject.tag == "Player" && GameManager.instance != null)
+        if (IsPlayerHealth())
         {
             GameManager.instance.GameOver();
         }
+
         if (gameObject.GetComponent<Enemy>() != null)
         {
             gameObject.GetComponent<Enemy>().DoBeforeDestroy();
         }
         Destroy(this.gameObject);
+    }
+
+    private bool IsPlayerHealth()
+    {
+        if (GameManager.instance == null)
+        {
+            return false;
+        }
+
+        if (CompareTag("Player"))
+        {
+            return true;
+        }
+
+        return GameManager.instance.player == gameObject;
     }
 }

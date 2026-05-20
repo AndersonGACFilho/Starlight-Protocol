@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8934617037744543916}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,6 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ed85a2ecfa48179aa3f82f1a01fc4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpSpawner
-  powerUpPrefabs: []
-  spawnPoints: []
+  powerUpPrefabs:
+  - {fileID: 4919296828006574569, guid: 57e4e187cdf85ff45acb9d252ca69ac4, type: 3}
+  - {fileID: 4919296828006574569, guid: d50c7e3801838034893c350c0b395524, type: 3}
+  - {fileID: 4919296828006574569, guid: d9686446c5db42c4d8d48f1211d3c74d, type: 3}
+  - {fileID: 4919296828006574569, guid: a140ef0b04948ee4798418690b78f63d, type: 3}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   powerUpParent: {fileID: 0}

@@ -47,7 +47,7 @@ public class WaveCountdownBar : MonoBehaviour
     {
         if (!waveManager)
         {
-            waveManager = FindObjectOfType<WaveManager>();
+            waveManager = FindFirstObjectByType<WaveManager>();
         }
     }
 

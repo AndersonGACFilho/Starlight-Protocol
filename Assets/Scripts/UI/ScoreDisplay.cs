@@ -38,6 +38,11 @@ public class ScoreDisplay : UIelement
     {
         if (displayText == null)
         {
+            displayText = GetComponent<TextMeshProUGUI>();
+        }
+
+        if (displayText == null)
+        {
             Debug.LogError($"{nameof(ScoreDisplay)}: No display text assigned.");
             enabled = false;
             return;
@@ -45,6 +50,22 @@ public class ScoreDisplay : UIelement
 
         originalFontSize = displayText.fontSize;
         lastDisplayedScore = displayText.text;
+    }
+
+    private void OnEnable()
+    {
+        GameManager.ScoreChanged += HandleScoreChanged;
+        ForceDisplayScore();
+    }
+
+    private void OnDisable()
+    {
+        GameManager.ScoreChanged -= HandleScoreChanged;
+    }
+
+    private void Update()
+    {
+        DisplayScore();
     }
 
     /// <summary>
@@ -72,7 +93,43 @@ public class ScoreDisplay : UIelement
         lastDisplayedScore = currentScore;
         displayText.text = currentScore;
 
-        PlayPulse();
+        if (isActiveAndEnabled)
+        {
+            PlayPulse();
+        }
+    }
+
+    private void ForceDisplayScore()
+    {
+        if (displayText == null)
+        {
+            return;
+        }
+
+        string currentScore = GameManager.score.ToString();
+        lastDisplayedScore = currentScore;
+        displayText.text = currentScore;
+    }
+
+    private void HandleScoreChanged(int newScore)
+    {
+        if (displayText == null)
+        {
+            return;
+        }
+
+        string currentScore = newScore.ToString();
+        if (currentScore == lastDisplayedScore)
+        {
+            return;
+        }
+
+        lastDisplayedScore = currentScore;
+        displayText.text = currentScore;
+        if (isActiveAndEnabled)
+        {
+            PlayPulse();
+        }
     }
 
     /// <summary>

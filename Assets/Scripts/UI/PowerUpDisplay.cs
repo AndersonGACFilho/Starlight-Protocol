@@ -94,7 +94,7 @@ public class PowerUpDisplay : UIelement
     {
         if (!playerPowerUpController)
         {
-            playerPowerUpController = FindObjectOfType<PlayerPowerUpController>();
+            playerPowerUpController = FindFirstObjectByType<PlayerPowerUpController>();
         }
 
         EnsureImageSlots();

@@ -123,12 +123,12 @@ public class WaveManager : MonoBehaviour
     {
         if (!enemySpawner)
         {
-            enemySpawner = FindObjectOfType<EnemySpawner>();
+            enemySpawner = FindFirstObjectByType<EnemySpawner>();
         }
 
         if (!powerUpSpawner)
         {
-            powerUpSpawner = FindObjectOfType<PowerUpSpawner>();
+            powerUpSpawner = FindFirstObjectByType<PowerUpSpawner>();
         }
     }
 

@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void SetUpUIElements()
     {
-        UIelements = FindObjectsOfType<UIelement>().ToList();
+        UIelements = FindObjectsByType<UIelement>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void SetUpEventSystem()
     {
-        eventSystem = FindObjectOfType<EventSystem>();
+        eventSystem = FindFirstObjectByType<EventSystem>();
         if (eventSystem == null)
         {
             Debug.LogWarning("There is no event system in the scene but you are trying to use the UIManager. \n" +
@@ -107,7 +107,8 @@ public class UIManager : MonoBehaviour
         {
             if (isPaused)
             {
-                SetActiveAllPages(false);
+                SetOverlayPagesActive(false);
+                SetHudPagesActive(true);
                 Time.timeScale = 1;
                 isPaused = false;
             }
@@ -163,7 +164,9 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         SetUpEventSystem();
+        SetUpPages();
         SetUpUIElements();
+        GoToPage(defaultPage);
         UpdateUI();
     }
 
@@ -206,12 +209,56 @@ public class UIManager : MonoBehaviour
     /// <param name="pageIndex">The index in the page list to go to</param>
     public void GoToPage(int pageIndex)
     {
-        if (pageIndex < pages.Count && pages[pageIndex] != null)
+        SetUpPages();
+
+        if (pageIndex >= 0 && pageIndex < pages.Count && pages[pageIndex] == null)
         {
-            SetActiveAllPages(false);
+            SetOverlayPagesActive(false);
+            SetHudPagesActive(true);
+            currentPage = pageIndex;
+            UpdateUI();
+            return;
+        }
+
+        if (pageIndex >= 0 && pageIndex < pages.Count && pages[pageIndex] != null)
+        {
+            SetOverlayPagesActive(false);
+            SetHudPagesActive(true);
             pages[pageIndex].gameObject.SetActive(true);
             pages[pageIndex].SetSelectedUIToDefault();
+            currentPage = pageIndex;
+            UpdateUI();
+            return;
         }
+
+        Debug.LogWarning($"{nameof(UIManager)}: Page index {pageIndex} is not configured.");
+    }
+
+    public bool TryGoToPage(int pageIndex)
+    {
+        SetUpPages();
+
+        if (pageIndex >= 0 && pageIndex < pages.Count && pages[pageIndex] == null)
+        {
+            SetOverlayPagesActive(false);
+            SetHudPagesActive(true);
+            currentPage = pageIndex;
+            UpdateUI();
+            return true;
+        }
+
+        if (pageIndex >= 0 && pageIndex < pages.Count && pages[pageIndex] != null)
+        {
+            SetOverlayPagesActive(false);
+            SetHudPagesActive(true);
+            pages[pageIndex].gameObject.SetActive(true);
+            pages[pageIndex].SetSelectedUIToDefault();
+            currentPage = pageIndex;
+            UpdateUI();
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -225,9 +272,23 @@ public class UIManager : MonoBehaviour
     /// <param name="pageName">The name of the page in the game you want to go to, if their are duplicates this picks the first found</param>
     public void GoToPageByName(string pageName)
     {
+        SetUpPages();
         UIPage page = pages.Find(item => item.name == pageName);
         int pageIndex = pages.IndexOf(page);
         GoToPage(pageIndex);
+    }
+
+    public bool TryGoToPageByName(string pageName)
+    {
+        SetUpPages();
+        UIPage page = pages.Find(item => item && item.name.Contains(pageName));
+        if (!page)
+        {
+            return false;
+        }
+
+        int pageIndex = pages.IndexOf(page);
+        return TryGoToPage(pageIndex);
     }
 
     /// <summary>
@@ -241,13 +302,114 @@ public class UIManager : MonoBehaviour
     /// <param name="activated">The true or false value to set all page game object's activeness to</param>
     public void SetActiveAllPages(bool activated)
     {
+        SetUpPages();
+
         if (pages != null)
         {
             foreach (UIPage page in pages)
             {
-                if (page != null)
-                    page.gameObject.SetActive(activated);
+                if (page == null)
+                {
+                    continue;
+                }
+
+                if (!activated && IsHudPage(page))
+                {
+                    page.gameObject.SetActive(true);
+                    continue;
+                }
+
+                page.gameObject.SetActive(activated);
             }
         }
+    }
+
+    private void SetOverlayPagesActive(bool activated)
+    {
+        SetUpPages();
+
+        if (pages == null)
+        {
+            return;
+        }
+
+        foreach (UIPage page in pages)
+        {
+            if (page == null || IsHudPage(page))
+            {
+                continue;
+            }
+
+            page.gameObject.SetActive(activated);
+        }
+    }
+
+    private void SetHudPagesActive(bool activated)
+    {
+        SetUpPages();
+
+        if (pages == null)
+        {
+            return;
+        }
+
+        foreach (UIPage page in pages)
+        {
+            if (page != null && IsHudPage(page))
+            {
+                page.gameObject.SetActive(activated);
+            }
+        }
+    }
+
+    private void SetUpPages()
+    {
+        if (pages != null && pages.Count > 0 && pages.Any(page => page != null))
+        {
+            return;
+        }
+
+        pages = FindObjectsByType<UIPage>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .OrderBy(page => GetPageSortOrder(page.name))
+            .ThenBy(page => page.transform.GetSiblingIndex())
+            .ToList();
+    }
+
+    private int GetPageSortOrder(string pageName)
+    {
+        if (pageName.Contains("BaseUI"))
+        {
+            return 0;
+        }
+
+        if (pageName.Contains("GameOver"))
+        {
+            return 1;
+        }
+
+        if (pageName.Contains("Victory"))
+        {
+            return 2;
+        }
+
+        if (pageName.Contains("Pause"))
+        {
+            return 3;
+        }
+
+        return 10;
+    }
+
+    private bool IsHudPage(UIPage page)
+    {
+        if (page == null)
+        {
+            return false;
+        }
+
+        return page.name.Contains("BaseUI")
+            || page.GetComponentInChildren<ScoreDisplay>(true) != null
+            || page.GetComponentInChildren<PowerUpDisplay>(true) != null
+            || page.GetComponentInChildren<WaveDisplay>(true) != null;
     }
 }

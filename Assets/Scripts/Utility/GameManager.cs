@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     // The script that manages all others
     public static GameManager instance = null;
 
+    public static event Action<int> ScoreChanged;
+
     [Tooltip("The player gameobject")]
     public GameObject player = null;
 
@@ -28,11 +31,15 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return instance.gameManagerScore;
+            return instance ? instance.gameManagerScore : 0;
         }
         set
         {
-            instance.gameManagerScore = value;
+            if (instance)
+            {
+                instance.gameManagerScore = value;
+                ScoreChanged?.Invoke(instance.gameManagerScore);
+            }
         }
     }
 
@@ -81,9 +88,9 @@ public class GameManager : MonoBehaviour
             DestroyImmediate(this);
         }
 
-        if ((player == null) && (FindObjectOfType<Controller>() != null))
+        if ((player == null) && (FindFirstObjectByType<BasePlayerController>() != null))
         {
-            player = FindObjectOfType<Controller>().gameObject;
+            player = FindFirstObjectByType<BasePlayerController>().gameObject;
         }
         else if ((player == null) && (SceneManager.GetActiveScene().name!="MainMenu"))
         {
@@ -145,8 +152,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FigureOutHowManyEnemiesExist()
     {
-        List<EnemySpawner> enemySpawners = FindObjectsOfType<EnemySpawner>().ToList();
-        List<Enemy> staticEnemies = FindObjectsOfType<Enemy>().ToList();
+        List<EnemySpawner> enemySpawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None).ToList();
+        List<Enemy> staticEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None).ToList();
 
         int numberOfInfiniteSpawners = 0;
         int enemiesFromSpawners = 0;
@@ -226,11 +233,21 @@ public class GameManager : MonoBehaviour
     /// <param name="scoreAmount">The amount to add to the score</param>
     public static void AddScore(int scoreAmount)
     {
+        if (instance == null)
+        {
+            Debug.LogWarning($"{nameof(GameManager)}: Cannot add score because no GameManager instance exists.");
+            return;
+        }
+
         score += scoreAmount;
+        PlayerPrefs.SetInt("score", score);
+
         if (score > instance.highScore)
         {
             SaveHighScore();
         }
+
+        Debug.Log($"{nameof(GameManager)}: Score changed to {score}.");
         UpdateUIElements();
     }
     
@@ -246,6 +263,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("score", 0);
         score = 0;
+        UpdateUIElements();
     }
 
     /// <summary>
@@ -294,9 +312,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void UpdateUIElements()
     {
-        if (UIManager.instance != null)
+        UIManager uiManager = UIManager.instance ? UIManager.instance : FindFirstObjectByType<UIManager>(FindObjectsInactive.Include);
+
+        if (uiManager != null)
         {
-            UIManager.instance.UpdateUI();
+            uiManager.UpdateUI();
         }
     }
 
@@ -311,11 +331,18 @@ public class GameManager : MonoBehaviour
     public void LevelCleared()
     {
         PlayerPrefs.SetInt("score", score);
-        if (UIManager.instance != null)
+
+        UIManager uiManager = UIManager.instance ? UIManager.instance : FindFirstObjectByType<UIManager>(FindObjectsInactive.Include);
+
+        if (uiManager != null)
         {
-            player.SetActive(false);
-            UIManager.instance.allowPause = false;
-            UIManager.instance.GoToPage(gameVictoryPageIndex);
+            if (player)
+            {
+                player.SetActive(false);
+            }
+
+            uiManager.allowPause = false;
+            uiManager.GoToPage(gameVictoryPageIndex);
             if (victoryEffect != null)
             {
                 Instantiate(victoryEffect, transform.position, transform.rotation, null);
@@ -348,10 +375,20 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(gameOverEffect, transform.position, transform.rotation, null);
         }
-        if (UIManager.instance != null)
+
+        UIManager uiManager = UIManager.instance ? UIManager.instance : FindFirstObjectByType<UIManager>(FindObjectsInactive.Include);
+
+        if (uiManager != null)
         {
-            UIManager.instance.allowPause = false;
-            UIManager.instance.GoToPage(gameOverPageIndex);
+            uiManager.allowPause = false;
+            if (!uiManager.TryGoToPage(gameOverPageIndex) && !uiManager.TryGoToPageByName("GameOver"))
+            {
+                Debug.LogWarning($"{nameof(GameManager)}: Game Over page was not found.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{nameof(GameManager)}: Cannot show Game Over because no UIManager was found.");
         }
     }
 }

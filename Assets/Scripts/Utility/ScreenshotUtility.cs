@@ -64,20 +64,23 @@ public class ScreenshotUtility : MonoBehaviour
     void Awake()
     {
         if (screenShotUtility != null)
-        { // this gameobject must already have been setup in a previous scene, so just destroy this game object
-            Destroy(this.gameObject);
+        { // another screenshot utility already exists, so remove only this utility
+            DestroyUtilityInstance();
         }
         else if (runOnlyInEditor && !Application.isEditor)
-        { // chose not to work if this is running outside the editor so destroy it
-            Destroy(this.gameObject);
+        { // chose not to work outside the editor, so remove only this utility
+            DestroyUtilityInstance();
         }
         else
         { // this is the first time we are setting up the screenshot utility
           // setup reference to ScreenshotUtility class
             screenShotUtility = this.GetComponent<ScreenshotUtility>();
 
-            // keep this gameobject around as new scenes load
-            DontDestroyOnLoad(gameObject);
+            // keep standalone screenshot utility objects around as new scenes load
+            if (IsStandaloneUtilityObject())
+            {
+                DontDestroyOnLoad(gameObject);
+            }
 
             // get image count from player prefs for indexing of filename
             m_ImageCount = PlayerPrefs.GetInt(ImageCntKey);
@@ -88,6 +91,30 @@ public class ScreenshotUtility : MonoBehaviour
                 Directory.CreateDirectory("Screenshots");
             }
         }
+    }
+
+    /// <summary>
+    /// Removes this utility without accidentally destroying shared manager objects.
+    /// </summary>
+    private void DestroyUtilityInstance()
+    {
+        if (IsStandaloneUtilityObject())
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Destroy(this);
+    }
+
+    /// <summary>
+    /// Returns true only when this GameObject exists specifically for screenshots.
+    /// </summary>
+    private bool IsStandaloneUtilityObject()
+    {
+        return transform.parent == null
+            && gameObject.name.Contains(nameof(ScreenshotUtility))
+            && GetComponents<Component>().Length <= 2;
     }
 
     /// <summary>

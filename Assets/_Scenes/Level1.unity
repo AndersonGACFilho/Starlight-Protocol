@@ -973,7 +973,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 917568611}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 122674315306258128, guid: 46f38d89dfbd39e44bde668097234e2e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46f38d89dfbd39e44bde668097234e2e, type: 3}
@@ -10782,14 +10783,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1190792977}
-    - target: {fileID: 4867940027157724161, guid: fb3863dec9ed61644a34a2455dd1bc1d, type: 3}
-      propertyPath: gameIsWinnable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867940027157724161, guid: fb3863dec9ed61644a34a2455dd1bc1d, type: 3}
-      propertyPath: enemiesToDefeat
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4867940027157724174, guid: fb3863dec9ed61644a34a2455dd1bc1d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.61398
@@ -10833,10 +10826,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4867940027157724160, guid: fb3863dec9ed61644a34a2455dd1bc1d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1957644193}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb3863dec9ed61644a34a2455dd1bc1d, type: 3}
 --- !u!114 &945623146 stripped
 MonoBehaviour:
@@ -14886,17 +14876,6 @@ PolygonCollider2D:
       - {x: -1.5625, y: 1.8125}
       - {x: -1.53125, y: 1.8125}
   m_UseDelaunayMesh: 1
---- !u!114 &1381165143 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4482406526679253132, guid: 46f38d89dfbd39e44bde668097234e2e, type: 3}
-  m_PrefabInstance: {fileID: 99104851}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37851aa441366846870e1fea7847f59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1383245852
 GameObject:
   m_ObjectHideFlags: 0
@@ -19123,17 +19102,33 @@ PrefabInstance:
       value: UIManager
       objectReference: {fileID: 0}
     - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
+      propertyPath: currentPage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
+      propertyPath: defaultPage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
+      propertyPath: pages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
       propertyPath: 'pages.Array.data[0]'
       value: 
       objectReference: {fileID: 945623146}
     - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
       propertyPath: 'pages.Array.data[1]'
       value: 
-      objectReference: {fileID: 1381165143}
+      objectReference: {fileID: 1912868625}
     - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
       propertyPath: 'pages.Array.data[2]'
       value: 
       objectReference: {fileID: 2452578066994040035}
+    - target: {fileID: 6816893148955959799, guid: 1c0df30cd27710240931e8cee3eaa949, type: 3}
+      propertyPath: 'pages.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21017,6 +21012,17 @@ PolygonCollider2D:
       - {x: -1.5625, y: 1.8125}
       - {x: -1.53125, y: 1.8125}
   m_UseDelaunayMesh: 1
+--- !u!114 &1912868625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 246713591136548733, guid: 46f38d89dfbd39e44bde668097234e2e, type: 3}
+  m_PrefabInstance: {fileID: 99104851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37851aa441366846870e1fea7847f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1914396933
 GameObject:
   m_ObjectHideFlags: 0
@@ -21627,24 +21633,6 @@ PolygonCollider2D:
       - {x: -1.5625, y: 1.8125}
       - {x: -1.53125, y: 1.8125}
   m_UseDelaunayMesh: 1
---- !u!1 &1957644191 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4867940027157724160, guid: fb3863dec9ed61644a34a2455dd1bc1d, type: 3}
-  m_PrefabInstance: {fileID: 934386671}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1957644193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957644191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4035654639904343bd9b35a2e920a2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CursorChanger
-  newCursorSprite: {fileID: 2800000, guid: 37394102527191243b26bf5a6930b795, type: 3}
 --- !u!1 &1964048870
 GameObject:
   m_ObjectHideFlags: 0
@@ -24918,14 +24906,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1670937103}
     - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
-      propertyPath: spawnPoints.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
-      propertyPath: powerUpPrefabs.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 548192328}
@@ -24937,22 +24917,6 @@ PrefabInstance:
       propertyPath: 'spawnPoints.Array.data[2]'
       value: 
       objectReference: {fileID: 1919643353}
-    - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[0]'
-      value: 
-      objectReference: {fileID: 4919296828006574569, guid: 57e4e187cdf85ff45acb9d252ca69ac4, type: 3}
-    - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[1]'
-      value: 
-      objectReference: {fileID: 4919296828006574569, guid: d50c7e3801838034893c350c0b395524, type: 3}
-    - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[2]'
-      value: 
-      objectReference: {fileID: 4919296828006574569, guid: d9686446c5db42c4d8d48f1211d3c74d, type: 3}
-    - target: {fileID: 174497728286570459, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
-      propertyPath: 'powerUpPrefabs.Array.data[3]'
-      value: 
-      objectReference: {fileID: 4919296828006574569, guid: a140ef0b04948ee4798418690b78f63d, type: 3}
     - target: {fileID: 676042227780805602, guid: dcadc79e1dd1f8544aa0b2951d3ba175, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -138,7 +138,7 @@ public class NearestEnemyIndicator : UIelement
 
     private Enemy GetClosestOffscreenEnemy()
     {
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         Enemy closestEnemy = null;
         float closestDistanceSqr = float.PositiveInfinity;
         bool anyEnemyVisible = false;

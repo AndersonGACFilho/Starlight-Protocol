@@ -183,9 +183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamId: 1
-  damageAmount: 10
+  damageAmount: 1
   hitEffect: {fileID: 0}
-  destroyAfterDamage: 0
+  destroyAfterDamage: 1
   dealDamageOnTriggerEnter: 1
   dealDamageOnTriggerStay: 0
   dealDamageOnCollision: 0

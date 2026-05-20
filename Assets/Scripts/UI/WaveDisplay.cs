@@ -45,7 +45,7 @@ public class WaveDisplay : UIelement
     {
         if (!waveManager)
         {
-            waveManager = FindObjectOfType<WaveManager>();
+            waveManager = FindFirstObjectByType<WaveManager>();
         }
     }
 

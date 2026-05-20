@@ -303,7 +303,7 @@ MonoBehaviour:
   projectileHolder: {fileID: 0}
   isPlayerControlled: 0
   fireAction:
-    m_Name: 
+    m_Name: Fire
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 7c7bab4f-42f4-471c-9491-5d56c6a9c0cc
@@ -313,4 +313,5 @@ MonoBehaviour:
     m_Flags: 0
   fireRate: 3
   projectileSpread: 1
+  extraShotAngleInterval: 15
   fireEffect: {fileID: 6229913163069739088, guid: a499391aa95bee24ab8e999366f75fe4, type: 3}
