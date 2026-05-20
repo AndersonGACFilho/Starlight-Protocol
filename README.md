@@ -1,6 +1,8 @@
-# 2D Shooter
+# Starlight Protocol <img style="width:20px" src="Assets/Art/Icons/GameIcon.png"/>
 
-Unity 2D space shooter with inertia-based movement, progressive waves, weighted enemy spawning, stackable power-ups, and a dynamic HUD.
+
+
+Starlight Protocol is a Unity 2D space shooter with inertia-based movement, progressive waves, weighted enemy spawning, stackable power-ups, and a dynamic HUD.
 
 ## Project Version
 
